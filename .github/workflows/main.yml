@@ -8,9 +8,8 @@ jobs:
       - uses: actions/setup-python@v2
       - run: pip install -r test-requirements.txt
       - name: Linting
-        working-directory: hello-rest-api
         run: |
-          pycodestyle $(git ls-files '*.py') --format=default
+          pycodestyle $(git ls-files '*.py')
           mypy .
           pylint $(git ls-files '*.py')
       # Unit tests
