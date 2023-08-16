@@ -1,5 +1,6 @@
 # test_app.py
-import app
+from . import app
+
 
 def test_hello():
     web = app.app.test_client()
@@ -7,6 +8,7 @@ def test_hello():
     response = web.get('/api/v1/hello')
     assert response.status == '200 OK'
     assert response.data == b'{"msg":"hello"}\n'
+
 
 def test_handshake():
     web = app.app.test_client()
