@@ -1,8 +1,12 @@
 # test_app.py
+"""
+Tests hello_rest_api endpoints.
+"""
 from . import app
 
 
 def test_hello():
+    """expects 200 OK and JSON {msg": "hello"}"""
     web = app.app.test_client()
 
     response = web.get('/api/v1/hello')
@@ -11,6 +15,7 @@ def test_hello():
 
 
 def test_handshake():
+    """expects 200 OK and JSON {msg": "handshake"}"""
     web = app.app.test_client()
 
     response = web.post('/api/v1/handshake')
