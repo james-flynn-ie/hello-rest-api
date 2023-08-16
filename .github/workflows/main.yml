@@ -13,4 +13,4 @@ jobs:
           mypy .
           pylint $(git ls-files '*.py')
       # Unit tests
-      - run: pytest ./hello-rest-api
+      - run: pytest
