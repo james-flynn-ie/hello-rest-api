@@ -19,6 +19,7 @@ class RoundRobinResponse:
     def get_next_response(self):
         """
         Get the next round-robin response.
+        The value returned is the list item at the current response index.
         """
         response = self.responses[self.current_response_index]
         self.increment_index()
@@ -44,7 +45,6 @@ round_robin = RoundRobinResponse(hello_responses)
 @app.route("/api/v1/hello", methods=['GET'])
 def hello():
     """returns 200 OK and JSON message"""
-
     response = round_robin.get_next_response()
 
     msg = {
