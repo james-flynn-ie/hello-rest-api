@@ -77,7 +77,8 @@ def authenticate(username, password):
 @app.route("/api/v1/handshake", methods=['POST'])
 def check_admin_access():
     """
-    Simple authentication check to validate user and password values.
+    Authorization check to validate account user and password values,
+    as well as admin role privileges.
     """
     auth = request.authorization
     if not auth or not auth.username or not auth.password:
