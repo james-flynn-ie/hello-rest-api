@@ -71,6 +71,7 @@ def authenticate(username, password):
     user = users_dict.get(username)
     if user and user['password'] == password:
         return user
+    return None
 
 
 @app.route("/api/v1/handshake", methods=['POST'])
@@ -86,8 +87,7 @@ def check_admin_access():
     if not user or user['role'] != 'admin':
         abort(403)  # Forbidden
 
-    else:
-        return handshake()
+    return handshake()
 
 
 def handshake():
