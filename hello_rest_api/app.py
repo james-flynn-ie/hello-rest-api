@@ -19,8 +19,6 @@ class RoundRobinResponse:
     def get_next_response(self):
         """
         Get the next round-robin response.
-        The method iterates the current_response_index each time it is used,
-        using the mod of the responses list length to stay in bounds.
         """
         response = self.responses[self.current_response_index]
         self.increment_index()
@@ -28,7 +26,8 @@ class RoundRobinResponse:
 
     def increment_index(self):
         """
-        Increment the current_response_index in a circular manner.
+        Increment the current_response_index,
+        using the mod of the responses list length to stay in bounds.
         """
         self.current_response_index = ((self.current_response_index + 1)
                                        % len(self.responses))
