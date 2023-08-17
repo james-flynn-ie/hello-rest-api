@@ -1,9 +1,20 @@
 """
 flask web server.
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 
 app = Flask(__name__)
+
+
+"""
+Mock user data for demonstrating authentication process.
+Caution: Use a secure method such as Azure Entra ID (formerly Azure AD)
+for production workloads!
+"""
+users_dict = {
+    'admin': {'password': 'admin_password', 'role': 'admin'},
+    'user': {'password': 'user_password', 'role': 'user'}
+}
 
 
 class RoundRobinResponse:
@@ -53,7 +64,33 @@ def hello():
     return (jsonify(msg), 200)
 
 
+def authenticate(username, password):
+    """
+    Simple authentication check to validate user and password values.
+    """
+    user = users_dict.get(username)
+    if user and user['password'] == password:
+        return user
+    return None
+
+
 @app.route("/api/v1/handshake", methods=['POST'])
+def check_admin_access():
+    """
+    Authorization check to validate account user and password values,
+    as well as admin role privileges.
+    """
+    auth = request.authorization
+    if not auth or not auth.username or not auth.password:
+        abort(401)  # Unauthorized
+
+    user = authenticate(auth.username, auth.password)
+    if not user or user['role'] != 'admin':
+        abort(403)  # Forbidden
+
+    return handshake()
+
+
 def handshake():
     """returns 200 OK and JSON {"msg": "handshake"}"""
     msg = {
