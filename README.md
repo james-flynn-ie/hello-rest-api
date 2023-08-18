@@ -60,3 +60,27 @@ curl --request POST --url http://127.0.0.1:5000/api/v1/handshake
 ## Linting
 
 Linted using PyLint, MyPy and Flake8.
+
+# Docker
+
+Run the following command to build the container:
+
+```
+docker build hello-rest-api:latest .
+```
+
+Start the container locally using the command:
+
+```
+docker run -p 5000:5000 hello-rest-api:latest
+```
+
+Open a browser to access the hello endpoint.
+```
+http://localhost:5000/api/v1/hello
+```
+
+The handshake API can be reached through cURL, run from a different terminal:
+```
+curl --request POST --user "admin:admin_password" http://127.0.0.1:5000/api/v1/handshake 
+```
