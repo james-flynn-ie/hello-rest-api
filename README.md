@@ -1,3 +1,12 @@
+# Hello Rest API
+
+[![hello-rest-api lint and test](https://github.com/james-flynn-ie/hello-rest-api/actions/workflows/main.yml/badge.svg)](https://github.com/james-flynn-ie/hello-rest-api/actions/workflows/main.yml)
+
+A Flask web App that contains two endpoints.
+
+- /api/v1/hello: Returns round-robin responses
+- /api/v1/handshake: Demonstrates the use of basic authentication.
+
 ## Requirements
 
 Python v3.11
