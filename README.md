@@ -155,3 +155,26 @@ To access the app service handshake endpoint, run the following command.:
 ```
 curl --request POST --user "admin:admin_password" --url https://<<name-of-app-service>>.azurewebsites.net/api/v1/handshake
 ```
+
+## Github Actions Workflow
+
+Github Actions workflow will lint and test code on each push. 
+
+Pushes to main will deploy the Docker container on an App Service.
+
+### Requirements for Deploying an Azure App Service
+
+- Azure Managed Identity with:
+  - (Federated credentials)[https://github.com/marketplace/actions/azure-login#configure-a-federated-credential-to-use-oidc-based-authentication] linked to Github Actions.
+    - AZURE_CLIENT_ID
+    - AZURE_TENANT_ID
+    - AZURE_SUBSCRIPTION_ID
+  - Permissions to deploy an App Service within the resource group or subscription.
+  - Credentials stored as (secrets)[https://docs.github.com/en/actions/security-guides/encrypted-secrets] in Github Actions.
+
+- Terraform Backend:
+  - Azure Storage Account with:
+    - SAS token
+    - Resource Group Name
+    - Container Name
+    - Key name (Name of TF State file within container)
