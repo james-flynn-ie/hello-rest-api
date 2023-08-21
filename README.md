@@ -38,12 +38,14 @@ pip install -r requirements.txt
 python hello_rest_api/app.py
 ```
 
-## Test the "hello" endpoint
+## Testing 
+
+### Testing the "hello" endpoint
 
 Enter the URL http://127.0.0.1:5000/api/v1/hello in a browser to view the Hello World page. 
 Refreshing the browser should alternate the response between "hello" and "Hello from new v1".
 
-## Test the "handshake" endpoint
+### Testing the "handshake" endpoint
 
 The handshake endpoint has basic authentication on place.
 
@@ -66,11 +68,11 @@ Note that a 401 Unauthorized response will be returned if no username and passwo
 curl --request POST --url http://127.0.0.1:5000/api/v1/handshake
 ```
 
-## Linting
+### Linting
 
 Linted using PyLint, MyPy and Flake8.
 
-# Docker
+## Docker
 
 Run the following command to build the container:
 
@@ -81,15 +83,63 @@ docker build hello-rest-api:latest .
 Start the container locally using the command:
 
 ```
-docker run -p 5000:5000 hello-rest-api:latest
+docker run -p 80:5000 hello-rest-api:latest
 ```
 
 Open a browser to access the hello endpoint.
+
 ```
-http://localhost:5000/api/v1/hello
+http://localhost/api/v1/hello
 ```
 
 The handshake API can be reached through cURL, run from a different terminal:
+
 ```
-curl --request POST --user "admin:admin_password" http://127.0.0.1:5000/api/v1/handshake 
+curl --request POST --user "admin:admin_password" http://127.0.0.1/api/v1/handshake 
+```
+
+## Terraform
+
+### Requirements
+
+- Terraform installed
+- AZ CLI installed
+
+### Commands
+
+```
+cd terraform
+
+# Download Terraform providers
+terraform init
+
+# Check syntax
+terraform validate
+
+# Check plan (For production use, it is recommended to save the file using `-out` and use it in the apply stage)
+terraform plan
+
+# Deploy the infrastructure
+terraform apply
+
+# Destroy the infrastructure
+terraform apply -destroy
+```
+
+### Test the App Service
+
+#### Hello API endpoint
+
+Open a browser to access the hello endpoint.
+
+```
+https://<<name-of-app-service>>.azurewebsites.net/api/v1/hello
+```
+
+#### Handshake API endpoint
+
+To access the app service handshake endpoint, run the following command.:
+
+```
+curl --request POST --user "admin:admin_password" --url https://<<name-of-app-service>>.azurewebsites.net/api/v1/handshake
 ```
