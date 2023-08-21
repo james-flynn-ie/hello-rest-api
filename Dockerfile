@@ -7,6 +7,7 @@ COPY ./hello_rest_api/app.py /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+# Must be set to port 80 for Azure Web App.
+EXPOSE 80
 
 CMD ["python", "app.py"]
