@@ -74,6 +74,8 @@ Linted using PyLint, MyPy and Flake8.
 
 ## Docker
 
+### Test container
+
 Run the following command to build the container:
 
 ```
@@ -96,6 +98,16 @@ The handshake API can be reached through cURL, run from a different terminal:
 
 ```
 curl --request POST --user "admin:admin_password" http://127.0.0.1/api/v1/handshake 
+```
+
+### Push container to Azure Container Registry (ACR)
+
+To push a container to ACR, first tag the build with the ACR's Fully Qualified Domain Name:
+
+```
+docker build -t <<name-of-app-service>>.azurecr.io/hello-rest-api:latest .
+
+docker push <<name-of-app-service>>.azurecr.io/hello-rest-api:latest
 ```
 
 ## Terraform
