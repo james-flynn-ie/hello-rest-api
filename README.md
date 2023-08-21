@@ -9,7 +9,11 @@ A Flask web App that contains two endpoints.
 
 ## Requirements
 
-Python v3.11
+- Python v3.11
+- Docker
+- Terraform
+- AZ CLI
+- Azure subscription
 
 ## Use VirtualEnv
 
@@ -105,17 +109,19 @@ curl --request POST --user "admin:admin_password" http://127.0.0.1/api/v1/handsh
 To push a container to ACR, first tag the build with the ACR's Fully Qualified Domain Name:
 
 ```
-docker build -t <<name-of-app-service>>.azurecr.io/hello-rest-api:latest .
+docker build -t <<name-of-acr>>.azurecr.io/hello-rest-api:latest .
 
-docker push <<name-of-app-service>>.azurecr.io/hello-rest-api:latest
+docker push <<name-of-acr>>.azurecr.io/hello-rest-api:latest
 ```
 
 ## Terraform
 
-### Requirements
+Terraform is an infrastructure as code tool that lets you build, change, and version cloud resources safely and efficiently. 
 
-- Terraform installed
-- AZ CLI installed
+The scripts are broken into two phases for deployment:
+
+- 01-acr: Contains the resource group and ACR that are required for the App service to be deployed.
+- 02-app-service: Contains the App Service Plan and Web App that will host the application.
 
 ### Commands
 
@@ -145,15 +151,15 @@ terraform apply -destroy
 Open a browser to access the hello endpoint.
 
 ```
-https://<<name-of-app-service>>.azurewebsites.net/api/v1/hello
+https://<<name-of-web-app>>.azurewebsites.net/api/v1/hello
 ```
 
 #### Handshake API endpoint
 
-To access the app service handshake endpoint, run the following command.:
+To access the web-app's handshake endpoint, run the following command.:
 
 ```
-curl --request POST --user "admin:admin_password" --url https://<<name-of-app-service>>.azurewebsites.net/api/v1/handshake
+curl --request POST --user "admin:admin_password" --url https://<<name-of-web-app>>.azurewebsites.net/api/v1/handshake
 ```
 
 ## Github Actions Workflow
