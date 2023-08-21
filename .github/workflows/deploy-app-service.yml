@@ -23,9 +23,9 @@ jobs:
     # Deploy App Service
     - name: Terraform Init
       run: terraform init
-      working-directory: ./terraform-02-app-service
+      working-directory: terraform/02-app-service
 
     - name: Terraform Apply
       if: github.event_name == 'push' && github.ref == 'refs/heads/feature/app-service-pipeline'  # Only run on main branch pushes (i.e.: After PR merge)
       run: terraform apply -auto-approve
-      working-directory: ./terraform-02-app-service
+      working-directory: terraform/02-app-service
