@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      # TODO: Remove before merge
-      - feature/acr-push
 
 permissions:
     id-token: write
