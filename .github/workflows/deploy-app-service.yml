@@ -55,6 +55,11 @@ jobs:
                        -backend-config="sas_token=${{ secrets.AZURE_STORAGE_SAS_TOKEN }}"
       working-directory: terraform/02-app-service
 
+    # To fulfill immutability principle, destroy the infrastructure prior to redeploying.
+    - name: Terraform Destroy
+      run: terraform apply -auto-approve -destroy
+      working-directory: terraform/02-app-service
+
     - name: Terraform Apply
       run: terraform apply -auto-approve
       working-directory: terraform/02-app-service
