@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      # TODO: Remove before merge
+      - feature/acr-push
 
 permissions:
     id-token: write
@@ -29,12 +31,21 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+    # Docker Build and Push to ACR
+    - name: Log in to Azure Container Registry
+      run: az acr login --name ${{ secrets.AZURE_ACR_NAME }}
+  
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/hello-rest-api:latest .
+        docker push ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/hello-rest-api:latest
+
+    # Deploy App Service using Terraform
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.5.5
 
-    # Deploy App Service
     - name: Terraform Init
       run: |
         terraform init -backend-config="resource_group_name=${{ secrets.AZURE_TF_STATE_RESOURCE_GROUP_NAME }}" \
